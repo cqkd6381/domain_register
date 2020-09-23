@@ -6,13 +6,22 @@ require __DIR__.'/../vendor/autoload.php';
 $uri = urldecode(
 	parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
 );
-echo '<pre>';
-var_dump($uri);
+
 if ($uri !== '/' && file_exists(__DIR__.'/'.$uri)) {
 	return false;
 }
 
 $route = require_once __DIR__.'/../routes/web.php';
 
-
-var_dump($route['checkDomain']);
+if(isset($route[substr($uri, 1)])){
+    $arr = explode('@', $route[substr($uri, 1)]);
+    try {
+        $reflectionMethod  = new \ReflectionMethod($arr[0], $arr[1]);
+        echo $reflectionMethod->invoke(new $reflectionMethod->class);
+    } catch (ReflectionException $e) {
+        echo $e->getLine() . '-' . $e->getMessage();
+    }
+}
+header("HTTP/1.1 404 Not Found");
+header("Status: 404 Not Found");
+exit;
