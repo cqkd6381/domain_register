@@ -1,4 +1,4 @@
-## domain_register
+## domain_register（本项目为临时项目，将于2020/10/07日删除）
 
 ### 安装
 
