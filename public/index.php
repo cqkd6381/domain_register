@@ -21,7 +21,9 @@ if(isset($route[substr($uri, 1)])){
     } catch (ReflectionException $e) {
         echo $e->getLine() . '-' . $e->getMessage();
     }
+}else{
+	header("HTTP/1.1 404 Not Found");
+	header("Status: 404 Not Found");
 }
-header("HTTP/1.1 404 Not Found");
-header("Status: 404 Not Found");
+
 exit;
