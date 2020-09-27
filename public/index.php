@@ -1,7 +1,9 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
-
+spl_autoload_register(function ($classname) {
+	$classname = strtr(substr($classname, 4), '\\', '/');
+	include __DIR__.'/../app/' . $classname . '.php';
+});
 
 $uri = urldecode(
 	parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
